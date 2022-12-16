@@ -9,6 +9,9 @@ export class CrewComponent implements OnInit {
 
   inCrew: boolean = false;
   crew: object[] = [];
+  selected: boolean = false;
+
+  selectedAstronaut = null;
 
   candidates: object[] = [
     {name: "Sally Ride", photo: 'https://handlers.education.launchcode.org/static/images/sally-ride.jpg'},
@@ -25,5 +28,30 @@ export class CrewComponent implements OnInit {
   ngOnInit() { }
 
   // Code the 'addCrewMember' function here:
+  addCrewMember(candidate: object) :void {
+    let alreadyEnrolled = false;
 
+    for(let i = 0; i < this.crew.length; i++){
+      if(candidate.name === this.crew[i].name){ //candidate is already part of the crew
+        let idx = this.crew.indexOf(candidate);
+        this.crew.splice(idx, 1); //remove the candidate from the crew array
+        alreadyEnrolled = true;
+      }
+    }
+    
+    if (!alreadyEnrolled && this.crew.length < 3) {
+      this.crew.push(candidate);
+    }
+  }
+
+  enrolled(candidate: object){
+    return this.crew.includes(candidate);
+  }
+
+  getCrewStatus(){
+    if(this.crew.length >= 3){
+      return "Crew Full";
+    }
+    return "Crew";
+  }
 }
