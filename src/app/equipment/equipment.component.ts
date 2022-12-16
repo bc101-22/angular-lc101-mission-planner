@@ -28,7 +28,7 @@ export class EquipmentComponent implements OnInit {
 
   // Code your addItem function here:
   addItem(equipment: object) {
-    if (!this.cargoHold.includes(equipment)) {
+    if (this.cargoHold.indexOf(equipment) === this.cargoHold.lastIndexOf(equipment)) {
       this.cargoHold.push(equipment);
       this.cargoMass += equipment.mass;
     }
@@ -51,7 +51,7 @@ export class EquipmentComponent implements OnInit {
     //  cargoHold.length === maxItems || item.mass + cargoMass > maximumAllowedMass
     if (this.cargoHold.length === this.maxItems 
       || equipment.mass + this.cargoMass > this.maximumAllowedMass
-      || this.cargoHold.includes(equipment)
+      || this.cargoHold.indexOf(equipment) !== this.cargoHold.lastIndexOf(equipment) //Don't allow more than two of the same item in the cargo hold
       ) {
       return true;
     }
